@@ -20,5 +20,7 @@ The output of the divider provided a voltage range of 0.3v-3.25v. This was an ac
 
 # Phototransistor Circuit
 
+The phototransistor was a new challenge. The phototransistor acted almost like a photodiode that was connected to the base of a BJT. This causes the transistor to pass more current as it receives more light. After trying multiple different configurations, it was decided that biasing the base of the transistor, and taking the reading at the collector of the transistor provided the best results. Using the shown configuration, the output voltage ranged from 0.5v-2.85v. Although a portion of the 0-3.3v range was cutoff, this still provided sufficient precision for the ADC. The circuit created can be seen below. 
 
+![Alt Text] (https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/commit/67a56208a209ed9995270ad24527805fdf2a6fc2)
 
