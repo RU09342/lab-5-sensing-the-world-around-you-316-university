@@ -10,5 +10,7 @@ This led to the choice of 120k and 10.27k resistances for R2 and R1 respectively
 
 # Photoresistor Circuit
 
-![Photoresistor sensing circuit] (https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/commit/04561c4e15a1862645e0f5efc73e8e7ff1aa6e1f)
+The challenge of the photoresistor was cnverting a changing resistance value into a changing voltage value. This was accomplished by using a voltage divider. Experimentally, the range of resistance that the photoresistor held was determined to be from about 100 Ohms up to 70k Ohms. A series of calculations was done using the voltage divider equation. Eventually, a 1K resistor was decided upon to be the other resistor in the divider. These calculations are shown below.
+
+![Photoresistor sensing circuit] (https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/commit/67a56208a209ed9995270ad24527805fdf2a6fc2)
 
