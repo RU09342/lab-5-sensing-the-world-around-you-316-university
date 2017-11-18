@@ -1,0 +1,3 @@
+# Photodiode Circuit
+
+The photodiode circuit was based on converting the current generated from the photodiode into a voltage that could be read through the ADC on a microcontroller. The main challenge of this design was figuring out what level of gain to enact on the signal. This was a challenge because the datasheet was not available for reference. Therefore, the gain was determined through experimental means. The first stage of gain would be completed by a transimpedance amplifier. This type of amplifier is designed to convert currents into a voltage, and the gain is reffereed to in Ohms. This is because the gain of the 
