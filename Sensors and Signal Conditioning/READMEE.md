@@ -18,5 +18,7 @@ The output of the divider provided a voltage range of 0.3v-3.25v. This was an ac
 
 ![Alt Text] (https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/commit/67a56208a209ed9995270ad24527805fdf2a6fc2)
 
+# Phototransistor Circuit
+
 
 
