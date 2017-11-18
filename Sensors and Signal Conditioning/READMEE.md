@@ -26,4 +26,6 @@ The phototransistor was a new challenge. The phototransistor acted almost like a
 
 # Software
 
-The software for each sensor was identical. This is because the sensors were each designed to provide a reasonable range of the 0-3.3v range that was utilized by each ADC. This allowed any sensor to be hooked up to the MSP430 and they acted similarly. The ADC was configured with AVSS and AVCC as the reference voltages. 
+The software for each sensor was identical. This is because the sensors were each designed to provide a reasonable range of the 0-3.3v range that was utilized by each ADC. This allowed any sensor to be hooked up to the MSP430 and they acted similarly. The ADC was configured with AVSS and AVCC as the reference voltages. Timing of the ADC was handled by a timer by setting bit 0 of the ADCCTL register whenever a voltage conversion was desired. The conversion was always handled by ADCMEM0. Whenever an ADC conversion was finished the value received was sent out through the transmit buffer at 9600 baud. This software was written for every board.
+
+The only differences between each board was only register names and configuration. All of the concepts for code structure stayed exactly the same.
