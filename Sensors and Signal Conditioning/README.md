@@ -2,27 +2,27 @@
 
 The photodiode circuit was based on converting the current generated from the photodiode into a voltage that could be read through the ADC on a microcontroller. The main challenge of this design was figuring out what level of gain to enact on the signal. This was a challenge because the datasheet was not available for reference. Therefore, the gain was determined through experimental means. The first stage of gain would be completed by a transimpedance amplifier. This type of amplifier is designed to convert currents into a voltage, and the gain is reffereed to in Ohms. This is because the output of the circuit is equal to the current runnning through the photodiode times the feedback resistance. In our circuit, we chose this gain experimentally to be 1Meg. This ended up giving the circuit a range of outputs from 0-260 mV. This lead to another stage of gain being implemented. We needed a gain of 12.7 in the second amplifier to reach the full range of outputs, 0-3.3v. A noninverting op amp was chosen. The gain of a noniverting op amp is shown below. 
 
-![Alt Text] (https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/blob/master/Pictures/Gain%2C%20noninveting%20op%20amp.png)
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/blob/master/Pictures/Gain%2C%20noninveting%20op%20amp.png)
 
 This led to the choice of 120k and 10.27k resistances for R2 and R1 respectively. Overall, this gain took the photodiode from 0-3.3v over the full range of light that we were testing with. Below the full schematic for the photodiode circuit can be seen. This circuit gave us full resolution using 3.3v for the reference in our ADC software.
 
-![Alt Text] (https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/blob/master/Pictures/Photodiode%20schematic.png)
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/blob/master/Pictures/Photodiode%20schematic.png)
 
 # Photoresistor Circuit
 
 The challenge of the photoresistor was cnverting a changing resistance value into a changing voltage value. This was accomplished by using a voltage divider. Experimentally, the range of resistance that the photoresistor held was determined to be from about 100 Ohms up to 70k Ohms. A series of calculations was done using the voltage divider equation. Eventually, a 1K resistor was decided upon to be the other resistor in the divider. These calculations are shown below. The photoresistor was chosen to be resistor number two, because in our calculations this led to a greater output voltage range.
 
-![Alt Text] (https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/blob/master/Pictures/Voltage%20divider.png)
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/blob/master/Pictures/Voltage%20divider.png)
 
 The output of the divider provided a voltage range of 0.3v-3.25v. This was an acceptable range of voltage and didn't require any additional adding or subtracting circuitry. A buffer was included in the final design in order to eliminate any innacuracies that could be caused by the input impedance of the MSP430. The final circuit can be seen below.
 
-![Alt Text] (https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/blob/master/Pictures/Photoresistor%20circuit.png)
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/blob/master/Pictures/Photoresistor%20circuit.png)
 
 # Phototransistor Circuit
 
 The phototransistor was a new challenge. The phototransistor acted almost like a photodiode that was connected to the base of a BJT. This causes the transistor to pass more current as it receives more light. After trying multiple different configurations, it was decided that biasing the base of the transistor, and taking the reading at the collector of the transistor provided the best results. Using the shown configuration, the output voltage ranged from 0.5v-2.85v. Although a portion of the 0-3.3v range was cutoff, this still provided sufficient precision for the ADC. The circuit created can be seen below. 
 
-![Alt Text] (https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/blob/master/Pictures/Phototransistor%20circuit.png)
+![Alt Text](https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/blob/master/Pictures/Phototransistor%20circuit.png)
 
 A buffer was utilized in between te microcontroller and the transistor circuit. This prevents and changes in voltage reading in between the circuit and the input to the microcontroller.
 
