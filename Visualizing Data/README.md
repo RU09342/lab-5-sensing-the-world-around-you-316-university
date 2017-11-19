@@ -7,12 +7,15 @@ Hopefully by this point you are fairly comfortable with how to control an RGB LE
 ## LCD Display
 Now that you are getting sensor data and acting on it, why don't you actually try to display the information the user in actual numbers. Using the MSP430FR6989, convert the information from all three of your sensors to a human readable value on the on-board LCD. Fair warning, *DO NOT TRY TO REINVENT THE WHEEL*. Make sure you give the resource explorer a good looking through to see what TI is going to provide you.
 
-## PC Visualization
-While UART is awesome for talking between processors, it also can be used to stream data back to your computer which you can use software to read. If you want to be adventurous (or if you have experiences in other languages like Python or Java) you can try to make your own visualization software for looking at the sensor data. Instead of that, you need to be able to collect and visualize data through MATLAB using the "Serial Toolbox". It is up to you to figure out how fancy you want your plots to be, but at a minimum, your processor needs to be able to communicate back to MATLAB and you need to be able to plot the data over time back on your laptop. Since this is all UART, I would expect you to do this for at least two processors.
-
-## Now its your turn
-For the finale of this lab, pick a processor and run at least two of these visualizations at the same time. You also should look at using multiple channels on the internal ADC, although this is not required.
-
 
 ## Deliverables
 For this part of the lab, you need to be able to organize your submissions based on the part of the lab it is fulfilling. If this means using a ton of folders, be my guest, but at the end of the day, I am going to be grading these as if I am someone coming to your repository for information. This whole part can be summarized in one large README which should be *HEAVILY* focused on how to actually implement and use your code. 
+
+# RGB LED 
+
+RGB LED-based real-time feedback is supported for three MSP430 microcontrollers. The MSP430FR2311, MSP430G2553, and MSP430F5529 each have a code implementation that can be utilized. The ADC inputs for each microprocessor is P1.5, P2.5, and P6.5 respectively. The code is designed with an input range from GND to 3.3v. The ADC will complete a conversion at a rate of 1 HZ and will update the color of the RGB LED between Blue and Red based on the input voltage. As it stands right now, input near GND will make the LED appear bue, while input near 3.3v will make the LED appear red.
+
+# LCD Display
+
+The LCD display is built to run on the MSP430FR6989 development board. 
+
