@@ -1,25 +1,33 @@
-# Sensors and Signal Conditioning
-One of the biggest limitations of the microcontroller is the fact that it lives in a digital world. We need certain components to be able to translate the analog world to the digital world and vice-versa. In this lab, we need to be able to convert some electrical phenomena into something our microcontroller can understand. For this, we need a few building blocks to do this.
+# Photodiode Circuit
 
-## Sensors
-Sensors in a nutshell convert a physical phenomena into an electrical phenomena. For example, and accelerometer converts an acceleration into a change in capacitance (in the case of some MEMS devices). This electrical phenomena does not have to be a voltage, and as such, we need to be able to convert our sensor output to a voltage. From there, we can read in this voltage through our Analog to Digital Converter (ADC).
+The photodiode circuit was based on converting the current generated from the photodiode into a voltage that could be read through the ADC on a microcontroller. The main challenge of this design was figuring out what level of gain to enact on the signal. This was a challenge because the datasheet was not available for reference. Therefore, the gain was determined through experimental means. The first stage of gain would be completed by a transimpedance amplifier. This type of amplifier is designed to convert currents into a voltage, and the gain is reffereed to in Ohms. This is because the output of the circuit is equal to the current runnning through the photodiode times the feedback resistance. In our circuit, we chose this gain experimentally to be 1Meg. This ended up giving the circuit a range of outputs from 0-260 mV. This lead to another stage of gain being implemented. We needed a gain of 12.7 in the second amplifier to reach the full range of outputs, 0-3.3v. A noninverting op amp was chosen. The gain of a noniverting op amp is shown below. 
 
-## Signal Conditioning
-The signal conditioning chain can be broken up into a few main building blocks. In the beginning you have your sensor which converts something into the electrical world. We then need a block which can convert that resultant electrical phenomena into a voltage. From here, this voltage may be too small/large for our microcontroller, so we need to amplify the signal. From there, we may need to de-noise the signal by filtering. After all of this, we might be at a point where we are ready to read the signal into our processor.
+![Alt Text] (https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/commit/d38178dd1da01924fd206abea9f29353d073e5ef)
 
-## Task
-For this part of the lab, you need to focus on two main aspects: utilizing and reading the ADC, and conditioning a sensor to provide you with a decent output. To do this, you will need to build the proper circuitry to take a measurement from sensors which convert a physical phenomena into:
-* Voltage
-* Current
-* Resistance
+This led to the choice of 120k and 10.27k resistances for R2 and R1 respectively. Overall, this gain took the photodiode from 0-3.3v over the full range of light that we were testing with. Below the full schematic for the photodiode circuit can be seen. This circuit gave us full resolution using 3.3v for the reference in our ADC software.
 
-## Deliverables
+![Alt Text] (https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/commit/04561c4e15a1862645e0f5efc73e8e7ff1aa6e1f)
 
-### Code
-Your code for this section should focus heavily on the ADC and being able to pull data from it. Your code need to communicate back to your computer using UART at 9600 Baud and send the ADC contents at 1 reading per second to start. This really is meant for you to see whether or not your signal conditioning is actually working and you can see changes in your sensor reading. This code should be very very similar to code you have written before and should be simple to port between your processors.
+# Photoresistor Circuit
 
-### Hardware
-The hardware portion should be the same for each of the processors. You will need to have a total of 3 circuits made, each corresponding to a different sensor. You need to look at the range of measurements and the amount of resolution you can get out of your ADC and determine how to convert, scale, and filter your signal. Don't forget the fact that you will need to convert to a voltage, making some of these circuits not so trivial. The main goal as the hardware designer for these sensors is to provide the microprocessor with the best resolution to maximize the effectiveness of the ADC.
+The challenge of the photoresistor was cnverting a changing resistance value into a changing voltage value. This was accomplished by using a voltage divider. Experimentally, the range of resistance that the photoresistor held was determined to be from about 100 Ohms up to 70k Ohms. A series of calculations was done using the voltage divider equation. Eventually, a 1K resistor was decided upon to be the other resistor in the divider. These calculations are shown below. The photoresistor was chosen to be resistor number two, because in our calculations this led to a greater output voltage range.
 
-### README
-The README for this part of the lab should talk briefly about how the ADC code works, but focus way more on the hardware aspect. You need to include schematics of your circuits, and well as supporting simulation/calculations which show that your circuits should work. You should talk about what types of circuits you are using and how they actually work.
+![Alt Text] (https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/commit/631f1b9ff926e9f2a3a7a41ab9f498e7a32f03e7)
+
+The output of the divider provided a voltage range of 0.3v-3.25v. This was an acceptable range of voltage and didn't require any additional adding or subtracting circuitry. A buffer was included in the final design in order to eliminate any innacuracies that could be caused by the input impedance of the MSP430. The final circuit can be seen below.
+
+![Alt Text] (https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/commit/67a56208a209ed9995270ad24527805fdf2a6fc2)
+
+# Phototransistor Circuit
+
+The phototransistor was a new challenge. The phototransistor acted almost like a photodiode that was connected to the base of a BJT. This causes the transistor to pass more current as it receives more light. After trying multiple different configurations, it was decided that biasing the base of the transistor, and taking the reading at the collector of the transistor provided the best results. Using the shown configuration, the output voltage ranged from 0.5v-2.85v. Although a portion of the 0-3.3v range was cutoff, this still provided sufficient precision for the ADC. The circuit created can be seen below. 
+
+![Alt Text] (https://github.com/RU09342/lab-5-sensing-the-world-around-you-316-university/commit/5b46f3d064915b35b5a7631896e02e24be1cd90d)
+
+A buffer was utilized in between te microcontroller and the transistor circuit. This prevents and changes in voltage reading in between the circuit and the input to the microcontroller.
+
+# Software
+
+The software for each sensor was identical. This is because the sensors were each designed to provide a reasonable range of the 0-3.3v range that was utilized by each ADC. This allowed any sensor to be hooked up to the MSP430 and they acted similarly. The ADC was configured with AVSS and AVCC as the reference voltages. Timing of the ADC was handled by a timer by setting bit 0 of the ADCCTL register whenever a voltage conversion was desired. The conversion was always handled by ADCMEM0. Whenever an ADC conversion was finished the value received was sent out through the transmit buffer at 9600 baud. This software was written for every board.
+
+The only differences between each board was only register names and configuration. All of the concepts for code structure stayed exactly the same.
